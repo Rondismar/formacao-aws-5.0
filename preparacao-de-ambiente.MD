@@ -100,20 +100,20 @@ sam init
 # Instalação do node js
 --- 
  [nodejs] (https://nodejs.org/pt-br/download)
-## Passo 1: 
+### Passo 1: 
 Instalar o PPA para obter acesso aos pacotes. Do seu diretório home, utilize o curl para recuperar o script de instalação para sua versão de preferência, certificando-se de substituir o 14.x pela string da sua versão favorita (se for diferente):
 ~~~ bash 
 cd ~
 curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
 ~~~
 
-## Passo 2: 
+### Passo 2: 
 em seguida, execute o script com o sudo:
 ~~~ bash
 nano nodesource_setup.sh
 ~~~
 
-## Passo 3: 
+### Passo 3: 
 O PPA será adicionado à sua configuração e seu cache de pacotes local será atualizado automaticamente. Agora, você pode instalar o pacote Node.js da mesma forma que fez na seção anterior:
 ~~~ bash
 sudo apt install nodejs
@@ -128,19 +128,19 @@ O pacote nodejs do NodeSource contém tanto o binário do node quanto o npm. Por
 
 # Configuração do Git
 ---
-## Passo 1:
+### Passo 1:
 Configure seu nome de usuário globalmente. Este nome será usado em todos os commits:
 ~~~ bash
 git config --global user.name "Seu Nome Completo"
 ~~~
 
-## Passo 2:
+### Passo 2:
 Configure seu email globalmente. Use o mesmo email associado à sua conta do GitHub/GitLab:
 ~~~ bash
 git config --global user.email "seu.email@exemplo.com"
 ~~~
 
-## Passo 3:
+### Passo 3:
 Configure o editor padrão para o Git (opcional). Por exemplo, para usar o nano:
 ~~~ bash
 git config --global core.editor nano
@@ -150,7 +150,7 @@ git config --global core.editor nano
 git config --global core.editor "code --wait"
 ~~~ 
 
-## Passo 4:
+### Passo 4:
 Verifique se as configurações foram aplicadas corretamente:
 ~~~ bash
 git config --list
@@ -159,17 +159,17 @@ git config --list
 ~~~ bash
 git config --global --list 
 ~~~
-## passo 5: 
+### passo 5: 
 Alterando a branch padrão para (main)
 ~~~ bash
 git config --global init.defaultBranch main
 ~~~
-## passo 6:
+### passo 6:
 Esa configuração e mais avançada normalmente utilizado em empresas, **credential.helper** usada para especificar um programa auxiliar que lida com o armazenamento e recuperação de credenciais de autenticação, como nomes de usuário e senhas, para interagir com repositórios remotos.
 ~~~ bash
 git config --global credential.helper <nome-do-gerenciador>
 ~~~
-**Obs. não configurar essa opção.**
+
 ### Alguns exemplos de gerenciadores de credenciais que podem ser usados são:
 
 - **cache**: O Git armazenará suas credenciais na memória por um período definido. Isso é útil para evitar digitar repetidamente suas credenciais durante uma sessão.
@@ -186,33 +186,26 @@ git config --global credential.helper store
 git config --global credential.helper manager
 ~~~
 
-~~~ bash
-
-~~~
-
-~~~ bash
-
-~~~
-## Passo 7:
+### Passo 7:
 Gere uma chave SSH para autenticação com repositórios remotos:
 ~~~ bash
 ssh-keygen -t rsa -b 4096 -C "seu.email@exemplo.com"
 ~~~
 
-## Passo 8:
+### Passo 8:
 Adicione a chave SSH ao agente SSH:
 ~~~ bash
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 ~~~
 
-## Passo 9:
+### Passo 9:
 Exiba a chave pública para adicionar ao seu provedor Git (GitHub/GitLab):
 ~~~ bash
 cat ~/.ssh/id_rsa.pub
 ~~~
 
-## Passo 10:
+### Passo 10:
 Adicione a chave SSH ao GitHub:
 
 ### 10.1: Copie a chave SSH pública
@@ -235,7 +228,7 @@ Copie todo o conteúdo exibido pelo comando anterior (começando com ssh-rsa e t
 ### 10.5: Confirme sua senha
 - Digite sua senha do GitHub quando solicitado para confirmar a adição da chave
 
-## Passo 11:
+### Passo 11:
 Teste a conexão SSH com o GitHub:
 ~~~ bash
 ssh -T git@github.com
@@ -245,6 +238,7 @@ ssh -T git@github.com
 
 # Instação do SSM
 ---
+ - **Passo a passo para instalação em ambientes debian/ubutun.**
 ### passo 1:
 Baixe o instalador usando a seguinte URL:
 ~~~ bash
@@ -305,7 +299,7 @@ Se a instalação foi bem-sucedida, a mensagem a seguir é retornada:
 The Session Manager plugin was installed successfully. Use the AWS CLI to start a session.
 ~~~
 
-ou 
+**ou** 
 ~~~ bash
 aws ssm --version
 ~~~
@@ -322,8 +316,8 @@ sudo dnf install -y glibc
 ~~~
 vamos utilizar os comandos abaixo para configurar a conta de acesso ao ssm no computador pessoal 
 
-Configurando o ssm e conectando a aws 
-# 1. Configure AWS CLI with your credentials
+## Configurando o ssm e conectando a aws 
+### 1. Configure AWS CLI with your credentials
 ~~~ bash
 aws configure
 # Enter the following when prompted:
@@ -332,39 +326,39 @@ aws configure
  Default region name: [Your Region e.g. us-east-1]
  Default output format: table
  ~~~
-# 2. Verify your AWS CLI configuration
+### 2. Verify your AWS CLI configuration
 ```  aws configure list ```
 
-# 3. Test SSM connectivity
+### 3. Test SSM connectivity
 ```aws ssm get-parameter --name "test" --with-decryption```
 
-# 4. Start a session with an EC2 instance using SSM
+### 4. Start a session with an EC2 instance using SSM
 ```aws ssm start-session --target i-xxxxxxxxxxxxxxxxx```
-# 5. List all instances that can be managed by SSM
+### 5. List all instances that can be managed by SSM
 ```aws ssm describe-instance-information```
 
-# 6. Connect to instance using SSM port forwarding (for SSH)
+### 6. Connect to instance using SSM port forwarding (for SSH)
 ~~~ bash
 aws ssm start-session \
     --target i-xxxxxxxxxxxxxxxxx \
     --document-name AWS-StartPortForwardingSession \
     --parameters '{"portNumber":["22"],"localPortNumber":["9999"]}'
 ~~~ 
-# 7. Test SSM plugin installation
+### 7. Test SSM plugin installation
 ```session-manager-plugin ```
 
-# 8. View SSM session history
+### 8. View SSM session history
 ~~~ bash
 aws ssm describe-sessions \
     --state History \
     --filters "key=Owner,value=$(aws sts get-caller-identity --query 'Arn' --output text)"
 ~~~
-# 9. Terminate an active SSM session
+### 9. Terminate an active SSM session
 ~~~ bash
 aws ssm terminate-session --session-id "session-id"
 ~~~
 
-# Configurando o AWS CLI para multiplos profiles
+## Configurando o AWS CLI para multiplos profiles
 ---
 O AWS CLI permite configurar múltiplos perfis (profiles) para gerenciar diferentes ambientes, contas AWS ou projetos de forma organizada e segura. Esta funcionalidade é essencial quando você trabalha com:
 
@@ -423,81 +417,74 @@ Default region name: ap-southeast-1
 Default output format: yaml
 ~~~ 
 ### List configured profiles
-```aws configure list-profiles```
-
+~~~ bash
+aws configure list-profiles
+~~~ 
 ### View specific profile config
-```aws configure list --profile dev```
-
+~~~ bash
+aws configure list --profile dev
+~~~
 ### Use specific profile for a command
-```aws s3 ls --profile prod```
-
+~~~ bash
+aws s3 ls --profile prod
+~~~ 
 ### Set default profile
-```export AWS_PROFILE=dev```
-
+~~~ bash
+export AWS_PROFILE=dev
+~~~
 ### Unset profile
-```unset AWS_PROFILE  ```
-
-## Instalação do Amazon Kiro CLI
+~~~ bash
+unset AWS_PROFILE
+~~~ 
+# Instalação do Amazon Kiro CLI
 ---
-## Instalação no Fedora
+[Documentação Kiro-cli](https://kiro.dev/docs/cli/)
+O Kiro CLI traz o poder do desenvolvimento assistido por IA para o seu terminal. Crie, teste e implante aplicativos usando comandos de linguagem natural e fluxos de trabalho automatizados.
+### Instalação com script no macOS e Linux:
+#### Passo 1:
+~~~ bash
+curl -fsSL https://cli.kiro.dev/install | bash
+~~~
+#### Passo 2:
+Caso não tenha criado a conta acesse o [site](https://profile.aws.amazon.com/) crie sua conta para usar o kiro.
 
-### Passo 1:
-Baixe o pacote RPM do Kiro CLI:bash
-```curl -L "https://github.com/aws/kiro-cli/releases/latest/download/kiro-cli-linux-x86_64.rpm" -o "kiro-cli.rpm"```
-### Passo 2:
-Instale o pacote usando dnf:bash
-```sudo dnf install -y kiro-cli.rpm```
-Alternativamente, você pode usar rpm diretamente:bash
-```sudo rpm -ivh kiro-cli.rpm```
-### Passo 3:
-Verifique a instalação:bash
-```kiro --version```
-### Passo 4 (Opcional):
-Caso encontre problemas de dependências, instale as dependências necessárias:bash
-```sudo dnf install -y glibc openssl```
-## Instalação no Ubuntu
+#### **Usando um arquivo zip para instalação no Linux.**
 
-### Passo 1:
-Baixe o pacote DEB do Kiro CLI:bash
-```curl -L "https://github.com/aws/kiro-cli/releases/latest/download/kiro-cli-linux-x86_64.deb" -o "kiro-cli.deb"```
-### Passo 2:
-Instale o pacote usando dpkg:bash
-```sudo dpkg -i kiro-cli.deb```
-### Passo 3:
-Caso haja dependências não resolvidas, execute:bash
-```sudo apt-get install -f```
-### Passo 4:
-Verifique a instalação:bash
-```kiro --version```
-## Instalação no VS Code
+#### Passo 1:
+Faça o download do arquivo zip:
+~~~ bash
+curl --proto '=https' --tlsv1.2 -sSf 'https://desktop-release.q.us-east-1.amazonaws.com/latest/kirocli-x86_64-linux.zip' -o 'kirocli.zip'
+~~~
+#### Passo 2:
+- **Descompacte o instalador:**
+~~~ bash
+unzip kirocli.zip
+~~~
+#### Passo 3:
+- **Execute o programa de instalação:**
+~~~ bash
+./kirocli/install.sh
+~~~
 
-### Passo 1:
-Abra o VS Code e acesse a aba de extensões (Ctrl+Shift+X)
+### Instalação no Ubuntu
 
-### Passo 2:
-Pesquise por "Amazon Kiro" na barra de busca
-
-### Passo 3:
-Clique em "Install" na extensão oficial da Amazon
-
-### Passo 4:
-Após a instalação, configure a extensão:
-- Abra as configurações do VS Code (Ctrl+,)
-- Pesquise por "kiro"
-- Configure o caminho do executável do Kiro CLI se necessário
-
-### Passo 5:
-Verifique se a extensão está funcionando:
-- Abra a paleta de comandos (Ctrl+Shift+P)
-- Digite "Kiro" para ver os comandos disponíveis
-
-### Passo 6:
-Configure suas credenciais AWS no VS Code:bash
-# No terminal integrado do VS Code
-```aws configure```
-### Passo 7:
-Teste a integração criando um novo projeto Kiro:
-- Use Ctrl+Shift+P
-- Digite "Kiro: New Project"
-- Siga as instruções na tela
-
+#### Passo 1:
+Baixe o pacote DEB do Kiro CLI
+~~~ bash
+wget https://desktop-release.q.us-east-1.amazonaws.com/latest/kiro-cli.deb
+~~~ 
+#### Passo 2:
+Instale o pacote usando dpkg:
+~~~ bash
+sudo dpkg -i kiro-cli.deb
+~~~ 
+#### Passo 3:
+Caso haja dependências não resolvidas, execute:
+~~~ bash
+sudo apt-get install -f
+~~~ 
+#### Passo 4:
+Verifique a instalação:
+~~~ bash
+kiro --version
+~~~
